@@ -1,0 +1,12 @@
+version: '3'
+services:
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    network_mode: host
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  app:
+    build: .
+    network_mode: host

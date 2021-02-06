@@ -1,0 +1,16 @@
+identifier: calliope_mini_rev2
+name: Calliope Mini Rev2
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 32
+testing:
+  ignore_tags:
+    - net
+supported:
+  - ble
+  - i2c
+  - gpio

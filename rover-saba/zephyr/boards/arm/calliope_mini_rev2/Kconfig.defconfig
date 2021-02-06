@@ -1,0 +1,17 @@
+# nRF51 BBC_MICROBIT board configuration
+
+# Copyright (c) 2016 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_CALLIOPE_MINI_REV2
+
+config BOARD
+	default "calliope_mini_rev2"
+
+config BT_CTLR
+	default BT
+
+config LOG_BUFFER_SIZE
+	default 128 if LOG
+
+endif # BOARD_CALLIOPE_MINI_REV2

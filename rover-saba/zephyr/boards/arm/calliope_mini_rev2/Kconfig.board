@@ -1,0 +1,8 @@
+# nRF51 BBC_MICROBIT board configuration
+
+# Copyright (c) 2016 Nordic Semiconductor ASA.
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_CALLIOPE_MINI_REV2
+	bool "Calliope Mini Rev2"
+	depends on SOC_NRF51822_QFAA

@@ -1,0 +1,138 @@
+/*
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf51822_qfaa.dtsi>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Calliope Mini Rev2";
+	compatible = "bbc,microbit";
+
+	aliases {
+		sw0 = &buttonA;
+		sw1 = &buttonB;
+		led-strip = &led_strip;
+	};
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,bt-mon-uart = &uart0;
+		zephyr,bt-c2h-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	led_strip: ws2812 {
+		compatible = "worldsemi,ws2812-gpio";
+		label = "WS2812";
+
+		chain-length = <1>;
+		in-gpios = <&gpio0 18 0>;
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		buttonA: button_0 {
+			label = "BTN_A";
+			gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+		};
+
+		buttonB: button_1 {
+			label = "BTN_B";
+			gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <24>;
+	rx-pin = <25>;
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_FAST>;
+	sda-pin = <20>;
+	scl-pin = <19>;
+
+	bmm150: bmm150@10 {
+		compatible = "bosch,bmm150";
+		reg = <0x10>;
+		label = "BMM150";
+	};
+
+	/*
+	bma280: bma280@18 {
+    	compatible = "bosch,bma280";
+    	reg = <0x18>;
+    	label = "BMA280";
+  	};
+	*/
+
+	bma280: bma280@18 {
+    	label = "bma280";
+    	compatible = "bosch,bma280";
+    	#address-cells = <1>;
+    	#size-cells = <1>;
+    	reg = <0x18>;
+    	status = "okay";
+    	is-bmc150;
+  	};
+
+	bmg160: bmg160@68 {
+		compatible = "bosch,bmg160";
+		reg = <0x68>;
+		label = "BMG160";
+	};
+
+};
+
+&flash0 {
+	/*
+	 * For more information, see:
+	 * https://docs.zephyrproject.org/latest/guides/dts/legacy-macros.html#legacy-flash-partitions
+	 */
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x8000>;
+		};
+		slot0_partition: partition@8000 {
+			label = "image-0";
+			reg = <0x00008000 0x1a000>;
+		};
+		slot1_partition: partition@22000 {
+			label = "image-1";
+			reg = <0x00022000 0x1a000>;
+		};
+		scratch_partition: partition@3c000 {
+			label = "image-scratch";
+			reg = <0x0003c000 0x2000>;
+		};
+		storage_partition: partition@3e000 {
+			label = "storage";
+			reg = <0x0003e000 0x00002000>;
+		};
+	};
+};

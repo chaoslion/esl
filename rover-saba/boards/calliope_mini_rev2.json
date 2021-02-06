@@ -1,0 +1,40 @@
+{
+    "build": {
+      "core": "nRF5",
+      "cpu": "cortex-m0",
+      "f_cpu": "16000000L",
+      "mcu": "nrf51822",
+      "zephyr": {
+         "variant": "calliope_mini_rev2"
+      }
+    },
+    "connectivity": [
+      "bluetooth"
+    ],
+    "debug": {
+      "jlink_device": "nRF51822_xxAC",
+      "onboard_tools": [
+        "cmsis-dap"
+      ],
+      "svd_path": "nrf51.svd"
+    },
+    "frameworks": [
+      "zephyr"
+    ],
+    "name": "Calliope Mini Rev2",
+    "upload": {
+      "maximum_ram_size": 32768,
+      "maximum_size": 262144,
+      "protocol": "cmsis-dap",
+      "protocols": [
+        "cmsis-dap",
+        "blackmagic",
+        "jlink",
+        "stlink",
+        "nrfjprog",
+        "mbed"
+      ]
+    },
+    "url": "https://developer.mbed.org/platforms/RedBearLab-BLE-Nano/",
+    "vendor": "RedBearLab"
+  }
